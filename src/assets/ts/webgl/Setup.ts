@@ -6,6 +6,8 @@ export class Setup {
   renderer: THREE.WebGLRenderer | null
   scene: THREE.Scene | null
   camera: THREE.PerspectiveCamera | null
+  ambientLight: THREE.AmbientLight | null
+  directionalLight: THREE.DirectionalLight | null;
   loader: THREE.TextureLoader
   controls: OrbitControls | null
 
@@ -13,6 +15,8 @@ export class Setup {
     this.renderer = null;
     this.scene = null;
     this.camera = null;
+    this.ambientLight = null;
+    this.directionalLight = null
     this.controls = null;
     this.loader = new THREE.TextureLoader();
 
@@ -23,6 +27,8 @@ export class Setup {
     this.setRenderer();
     this.setScene();
     this.setCamera();
+    this.setAmbientLight();
+    this.setDirectionalLight();
     this.setHelper();
   }
 
@@ -49,10 +55,10 @@ export class Setup {
       PARAMS.CAMERA.NEAR,
       PARAMS.CAMERA.FAR
     );
-    const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
-    const dist = window.innerHeight / 2 / Math.tan(fovRad);
+    // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
+    // const dist = window.innerHeight / 2 / Math.tan(fovRad);
 
-    this.camera.position.set(0, 0, dist);
+    this.camera.position.set(0, 0, 50);
   }
 
   updateCamera() {
@@ -63,6 +69,18 @@ export class Setup {
     const dist = window.innerHeight / 2 / Math.tan(fovRad);
     this.camera.position.set(0, 0, dist);
   }
+
+  setDirectionalLight() {
+    this.directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+    this.directionalLight.position.set(0, 5, 10);
+    this.scene?.add(this.directionalLight);
+  }
+
+  setAmbientLight() {
+    this.ambientLight = new THREE.AmbientLight(0xffffff, 0.8)
+    this.scene?.add(this.ambientLight);
+  }
+
 
   setHelper() {
     if (!this.camera) return;
