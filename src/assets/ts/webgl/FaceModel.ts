@@ -3,8 +3,8 @@ import { Setup } from "./Setup";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import faceModel from "../../model/face.glb";
 import { getImagePositionAndSize, ImagePositionAndSize } from "../utils/getElementSize";
-import fragmentShader from "../../shader/list/fragmentShader.glsl"
-import vertexShader from "../../shader/list/vertexShader.glsl"
+import fragmentShader from "../../shader/face/fragmentShader.glsl"
+import vertexShader from "../../shader/face/vertexShader.glsl"
 
 export class FaceModel {
   setup: Setup;
@@ -67,5 +67,10 @@ export class FaceModel {
         console.log(error);
       }
     );
+  }
+
+  raf() {
+    if (!this.material) return;
+    (this.material as any).uniforms.uTime.value += 0.01;
   }
 }
