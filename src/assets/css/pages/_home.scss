@@ -9,12 +9,12 @@
 
 .mv__title {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 50%;
-  transform: translate(-50%, -10%);
+  transform: translate(-50%, -5%);
   width: 100%;
   text-align: center;
-  font-size: rem(240);
+  font-size: min(rem(240), 240px);
   color: #fff;
   user-select: none;
   pointer-events: none;

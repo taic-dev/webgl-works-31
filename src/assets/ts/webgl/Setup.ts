@@ -29,7 +29,7 @@ export class Setup {
     this.setCamera();
     this.setAmbientLight();
     this.setDirectionalLight();
-    this.setHelper();
+    // this.setHelper();
   }
 
   setRenderer() {
@@ -58,7 +58,7 @@ export class Setup {
     );
     // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
     // const dist = window.innerHeight / 2 / Math.tan(fovRad);
-    this.camera.position.set(0, 0, 50);
+    this.camera.position.set(0, 0, 40);
   }
 
   updateCamera() {
@@ -67,7 +67,7 @@ export class Setup {
     this.camera?.updateProjectionMatrix();
     // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
     // const dist = window.innerHeight / 2 / Math.tan(fovRad);
-    this.camera.position.set(0, 0, 50);
+    this.camera.position.set(0, 0, 40);
   }
 
   setDirectionalLight() {

@@ -5,16 +5,21 @@ import faceModel from "../../model/face.glb";
 import { getImagePositionAndSize, ImagePositionAndSize } from "../utils/getElementSize";
 import fragmentShader from "../../shader/face/fragmentShader.glsl"
 import vertexShader from "../../shader/face/vertexShader.glsl"
+import { Animation } from "./Animation";
 
 export class FaceModel {
   setup: Setup;
   element: HTMLImageElement | null
   material: THREE.ShaderMaterial | null
+  modelGroup: THREE.Group
+  animation: Animation
 
   constructor(setup: Setup) {
     this.setup = setup;
     this.element = document.querySelector<HTMLImageElement>('.js-mv-image')
     this.material = null
+    this.modelGroup = new THREE.Group();
+    this.animation = new Animation();
   }
 
   init() {
@@ -22,6 +27,7 @@ export class FaceModel {
     const info = getImagePositionAndSize(this.element);
     this.setMaterial(info);
     this.setModel();
+    this.setAnimation();
   }
 
   setUniforms(info: ImagePositionAndSize) {
@@ -60,23 +66,32 @@ export class FaceModel {
         const faceModel = gltf.scene;
         const faceModelMesh = faceModel.children[0].children[0].children[0];
         (faceModelMesh as any).material = this.material
-        
+
         const box = new THREE.Box3().setFromObject(faceModel);
         const center = new THREE.Vector3();
         box.getCenter(center);
         faceModel.position.sub(center)
 
-        const modelGroup = new THREE.Group();
-        modelGroup.add(faceModel);
-        modelGroup.rotation.y = -Math.PI / 8; ;
+        this.modelGroup.add(faceModel);
+        this.modelGroup.scale.set(0, 0, 0);
+        this.modelGroup.rotation.y = -Math.PI / 8; ;
         
-        this.setup.scene?.add(modelGroup);
+        this.setup.scene?.add(this.modelGroup);
       },
       undefined,
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  setAnimation() {
+    this.animation.onceScale(this.modelGroup.scale)
+    
+    setTimeout(() => {
+      this.animation.repeatPosition(this.modelGroup.position)
+      this.animation.repeatScale(this.modelGroup.scale)
+    }, 1000)
   }
 
   raf() {
