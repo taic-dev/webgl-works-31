@@ -31,6 +31,8 @@ export class FaceModel {
       uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight)},
       uMouse: { value: new THREE.Vector2(0, 0) },
       uTime: { value: 0.0 },
+      uSize: { value: 5. },
+      uSpeed: { value: 0.01 },
     };
 
     return {
@@ -58,9 +60,17 @@ export class FaceModel {
         const faceModel = gltf.scene;
         const faceModelMesh = faceModel.children[0].children[0].children[0];
         (faceModelMesh as any).material = this.material
+        
+        const box = new THREE.Box3().setFromObject(faceModel);
+        const center = new THREE.Vector3();
+        box.getCenter(center);
+        faceModel.position.sub(center)
 
-        faceModel.position.set(-270, -160, 10);
-        this.setup.scene?.add(faceModel);
+        const modelGroup = new THREE.Group();
+        modelGroup.add(faceModel);
+        modelGroup.rotation.y = -Math.PI / 8; ;
+        
+        this.setup.scene?.add(modelGroup);
       },
       undefined,
       (error) => {

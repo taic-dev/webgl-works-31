@@ -35,6 +35,7 @@ export class Setup {
   setRenderer() {
     const element = document.querySelector('.webgl');
     this.renderer = new THREE.WebGLRenderer({ alpha: true });
+    this.renderer.setClearColor(new THREE.Color(0x00000))
     this.renderer.setSize(PARAMS.WINDOW.W, PARAMS.WINDOW.H);
     element?.appendChild(this.renderer.domElement);
   }
