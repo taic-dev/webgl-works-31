@@ -59,7 +59,7 @@ export class FaceModel {
         const faceModelMesh = faceModel.children[0].children[0].children[0];
         (faceModelMesh as any).material = this.material
 
-        faceModel.position.set(-270, -155, 10);
+        faceModel.position.set(-270, -160, 10);
         this.setup.scene?.add(faceModel);
       },
       undefined,

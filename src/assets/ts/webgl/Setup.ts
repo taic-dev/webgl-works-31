@@ -57,7 +57,6 @@ export class Setup {
     );
     // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
     // const dist = window.innerHeight / 2 / Math.tan(fovRad);
-
     this.camera.position.set(0, 0, 50);
   }
 
@@ -65,9 +64,9 @@ export class Setup {
     if (!this.camera) return;
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera?.updateProjectionMatrix();
-    const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
-    const dist = window.innerHeight / 2 / Math.tan(fovRad);
-    this.camera.position.set(0, 0, dist);
+    // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
+    // const dist = window.innerHeight / 2 / Math.tan(fovRad);
+    this.camera.position.set(0, 0, 50);
   }
 
   setDirectionalLight() {
