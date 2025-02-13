@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { Setup } from "./Setup";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import faceModel from "../../model/face.glb";
 import {
   getImagePositionAndSize,
   ImagePositionAndSize,
@@ -66,7 +65,7 @@ export class FaceModel {
   setModel() {
     const loader = new GLTFLoader();
     loader.load(
-      faceModel,
+      `${import.meta.env.BASE_URL}/assets/model/face.glb`,
       (gltf) => {
         const faceModel = gltf.scene;
         const faceModelMesh = faceModel.children[0].children[0].children[0];
