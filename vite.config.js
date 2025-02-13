@@ -6,6 +6,7 @@ import sassGlobImports from "vite-plugin-sass-glob-import";
 
 export default defineConfig({
   root: "src",
+  base: "/webgl-works-31",
   plugins: [
     sassGlobImports(),
     glslify(),
