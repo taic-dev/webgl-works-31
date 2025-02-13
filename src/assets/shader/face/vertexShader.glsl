@@ -33,8 +33,5 @@ void main() {
   vUv = uv;
   vPosition = position;
   vec3 pos = position;
-  // pos.x = pos.x + sin(pos.x * 10. * PI) * sin(uTime + 5.);
-  // pos.y = pos.y + noise(pos * 10. * sin(uTime * 0.5));
-
   gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }

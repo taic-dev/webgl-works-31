@@ -39,8 +39,8 @@ export class Animation {
       x: 1,
       y: 1,
       z: 1,
-      duration: 2.5,
-      ease: EASING.OUT_BACK
+      duration: 1,
+      ease: EASING.TRANSFORM
     });
   }
 
