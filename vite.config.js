@@ -5,6 +5,7 @@ import gltf from 'vite-plugin-gltf';
 import sassGlobImports from "vite-plugin-sass-glob-import";
 
 export default defineConfig({
+  base: "/webgl-works-31",
   root: "src",
   plugins: [
     sassGlobImports(),
@@ -12,7 +13,6 @@ export default defineConfig({
     gltf({ include: ["**/*.gltf", '**/*.glb'] }),
   ],
   build: {
-    outDir: './dist',
     emptyOutDir: true,
     assetsInclude: ['*.gltf', '*.glb'],
   },
