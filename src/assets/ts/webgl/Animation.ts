@@ -1,22 +1,51 @@
 import { gsap } from "gsap";
 import { EASING } from "../utils/constant";
+import { Setup } from "./Setup";
+import { FaceModel } from "./FaceModel";
 
 export class Animation {
+  setup: Setup
+  faceModel: FaceModel
 
-  onceScale(target: any) {
-    gsap.fromTo(target, {
+  constructor(setup: Setup, faceModel: FaceModel) {
+    this.setup = setup;
+    this.faceModel = faceModel;
+  }
+
+  init() {
+    this.turnOnTheLight();
+    this.onceScale();
+
+    setTimeout(() => {
+      this.repeatPosition();
+      this.repeatScale();
+    }, 2000);
+  }
+
+  turnOnTheLight() {
+    gsap.fromTo(this.setup.rectLight, {
+      intensity: 0
+    }, {
+      intensity: 5,
+      duration: 5,
+      ease: EASING.TRANSFORM
+    })
+  }
+
+  onceScale() {
+    gsap.fromTo(this.faceModel.modelGroup.scale, {
       x: 0, y: 0, z: 0,
     }, {
       x: 1,
       y: 1,
       z: 1,
-      duration: 1.5,
+      duration: 2.5,
       ease: EASING.OUT_BACK
     });
   }
 
-  repeatPosition(target: any) {
-    gsap.to(target, {
+  repeatPosition() {
+    gsap.to(this.faceModel.modelGroup.position, {
       y: 2,
       duration: 5,
       repeat: -1,
@@ -25,8 +54,8 @@ export class Animation {
     });
   }
 
-  repeatScale(target: any) {
-    gsap.to(target, {
+  repeatScale() {
+    gsap.to(this.faceModel.modelGroup.scale, {
       x: 1.05,
       y: 1.05,
       duration: 5,

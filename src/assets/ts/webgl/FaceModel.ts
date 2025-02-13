@@ -2,51 +2,56 @@ import * as THREE from "three";
 import { Setup } from "./Setup";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import faceModel from "../../model/face.glb";
-import { getImagePositionAndSize, ImagePositionAndSize } from "../utils/getElementSize";
-import fragmentShader from "../../shader/face/fragmentShader.glsl"
-import vertexShader from "../../shader/face/vertexShader.glsl"
-import { Animation } from "./Animation";
+import {
+  getImagePositionAndSize,
+  ImagePositionAndSize,
+} from "../utils/getElementSize";
+import fragmentShader from "../../shader/face/fragmentShader.glsl";
+import vertexShader from "../../shader/face/vertexShader.glsl";
 
 export class FaceModel {
+  element: HTMLImageElement | null;
   setup: Setup;
-  element: HTMLImageElement | null
-  material: THREE.ShaderMaterial | null
-  modelGroup: THREE.Group
-  animation: Animation
+  light: THREE.PointLight | null;
+  material: THREE.ShaderMaterial | null;
+  modelGroup: THREE.Group;
 
   constructor(setup: Setup) {
+    this.element = document.querySelector<HTMLImageElement>(".js-mv-image");
     this.setup = setup;
-    this.element = document.querySelector<HTMLImageElement>('.js-mv-image')
-    this.material = null
+    this.light = null;
+    this.material = null;
     this.modelGroup = new THREE.Group();
-    this.animation = new Animation();
   }
 
   init() {
-    if(!this.element) return;
+    if (!this.element) return;
     const info = getImagePositionAndSize(this.element);
     this.setMaterial(info);
     this.setModel();
-    this.setAnimation();
   }
 
   setUniforms(info: ImagePositionAndSize) {
     const loader = this.setup.loader;
-    
+
     const commonUniforms = {
-      uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight)},
+      uResolution: {
+        value: new THREE.Vector2(window.innerWidth, window.innerHeight),
+      },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uTime: { value: 0.0 },
-      uSize: { value: 5. },
+      uSize: { value: 5 },
       uSpeed: { value: 0.01 },
     };
 
     return {
-      uPlaneSize: { value: new THREE.Vector2(info.dom.width, info.dom.height)},
+      uPlaneSize: { value: new THREE.Vector2(info.dom.width, info.dom.height) },
       uTexture: { value: loader.load(info.image.src) },
-      uTextureSize: { value: new THREE.Vector2(info.image.width, info.image.height) },
-      ...commonUniforms
-    }
+      uTextureSize: {
+        value: new THREE.Vector2(info.image.width, info.image.height),
+      },
+      ...commonUniforms,
+    };
   }
 
   setMaterial(info: ImagePositionAndSize) {
@@ -55,7 +60,7 @@ export class FaceModel {
       uniforms: uniforms,
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
-    })
+    });
   }
 
   setModel() {
@@ -65,17 +70,17 @@ export class FaceModel {
       (gltf) => {
         const faceModel = gltf.scene;
         const faceModelMesh = faceModel.children[0].children[0].children[0];
-        (faceModelMesh as any).material = this.material
+        (faceModelMesh as any).material = this.material;
 
         const box = new THREE.Box3().setFromObject(faceModel);
         const center = new THREE.Vector3();
         box.getCenter(center);
-        faceModel.position.sub(center)
+        faceModel.position.sub(center);
 
         this.modelGroup.add(faceModel);
         this.modelGroup.scale.set(0, 0, 0);
-        this.modelGroup.rotation.y = -Math.PI / 8; ;
-        
+        this.modelGroup.rotation.y = -Math.PI / 8;
+
         this.setup.scene?.add(this.modelGroup);
       },
       undefined,
@@ -83,15 +88,6 @@ export class FaceModel {
         console.log(error);
       }
     );
-  }
-
-  setAnimation() {
-    this.animation.onceScale(this.modelGroup.scale)
-    
-    setTimeout(() => {
-      this.animation.repeatPosition(this.modelGroup.position)
-      this.animation.repeatScale(this.modelGroup.scale)
-    }, 1000)
   }
 
   raf() {

@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
+import { RectAreaLightUniformsLib } from "three/addons/lights/RectAreaLightUniformsLib.js";
 import { PARAMS } from "./constants";
 
 export class Setup {
@@ -8,6 +10,7 @@ export class Setup {
   camera: THREE.PerspectiveCamera | null
   ambientLight: THREE.AmbientLight | null
   directionalLight: THREE.DirectionalLight | null;
+  rectLight: THREE.RectAreaLight | null;
   loader: THREE.TextureLoader
   controls: OrbitControls | null
 
@@ -17,6 +20,7 @@ export class Setup {
     this.camera = null;
     this.ambientLight = null;
     this.directionalLight = null
+    this.rectLight = null;
     this.controls = null;
     this.loader = new THREE.TextureLoader();
 
@@ -27,9 +31,10 @@ export class Setup {
     this.setRenderer();
     this.setScene();
     this.setCamera();
-    this.setAmbientLight();
-    this.setDirectionalLight();
-    // this.setHelper();
+    this.setRectAreaLight();
+    // this.setAmbientLight();
+    // this.setDirectionalLight();
+    this.setHelper();
   }
 
   setRenderer() {
@@ -81,6 +86,13 @@ export class Setup {
     this.scene?.add(this.ambientLight);
   }
 
+  setRectAreaLight() {
+    RectAreaLightUniformsLib.init();
+    this.rectLight = new THREE.RectAreaLight(0xffffff, 0, 100, 40);
+    this.rectLight.position.set(0, 40, -15);
+    this.rectLight.lookAt(0, 10, 0);
+    this.scene?.add(this.rectLight);
+  }
 
   setHelper() {
     if (!this.camera) return;
@@ -92,6 +104,9 @@ export class Setup {
     // AxesHelper
     const axesHelper = new THREE.AxesHelper(2000);
     this.scene?.add(axesHelper);
+
+    // RectLight
+    // this.scene?.add(new RectAreaLightHelper(this.rectLight));
   }
 
   resize() {
