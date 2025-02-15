@@ -28,10 +28,6 @@ export class App {
     this.faceModel.raf();
   }
 
-  update() {
-
-  }
-
   resize() {
     this.setup.resize();
   }

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import GUI from "lil-gui";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
 import { RectAreaLightUniformsLib } from "three/addons/lights/RectAreaLightUniformsLib.js";
@@ -13,6 +14,7 @@ export class Setup {
   rectLight: THREE.RectAreaLight | null;
   loader: THREE.TextureLoader
   controls: OrbitControls | null
+  guiValue: any
 
   constructor() {
     this.renderer = null;
@@ -22,6 +24,7 @@ export class Setup {
     this.directionalLight = null
     this.rectLight = null;
     this.controls = null;
+    this.guiValue = null;
     this.loader = new THREE.TextureLoader();
 
     this.init();
@@ -34,7 +37,8 @@ export class Setup {
     this.setRectAreaLight();
     // this.setAmbientLight();
     // this.setDirectionalLight();
-    this.setHelper();
+    // this.setHelper();
+    this.setGui();
   }
 
   setRenderer() {
@@ -85,9 +89,19 @@ export class Setup {
   setRectAreaLight() {
     RectAreaLightUniformsLib.init();
     this.rectLight = new THREE.RectAreaLight(0xffffff, 1, 30, 40);
-    this.rectLight.position.set(0, 0, -20);
+    this.rectLight.position.set(0, 20, 0);
     this.rectLight.lookAt(0, 0, 0);
     this.scene?.add(this.rectLight);
+  }
+
+  setGui() {
+    const gui = new GUI();
+    this.guiValue = {
+      color: { r: 0.8314, g: 0.898, b: 1.0 },
+      wireframe: false,
+    };
+    gui.addColor(this.guiValue, "color")
+    gui.add(this.guiValue, "wireframe");
   }
 
   setHelper() {

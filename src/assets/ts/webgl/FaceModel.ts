@@ -32,23 +32,24 @@ export class FaceModel {
   }
 
   setUniforms(info: ImagePositionAndSize) {
-    const loader = this.setup.loader;
-
     const commonUniforms = {
       uResolution: {
         value: new THREE.Vector2(window.innerWidth, window.innerHeight),
       },
       uMouse: { value: new THREE.Vector2(0, 0) },
       uTime: { value: 0.0 },
-      uSize: { value: 5 },
-      uSpeed: { value: 0.01 },
     };
 
     return {
       uPlaneSize: { value: new THREE.Vector2(info.dom.width, info.dom.height) },
-      uTexture: { value: loader.load(info.image.src) },
-      uTextureSize: {
-        value: new THREE.Vector2(info.image.width, info.image.height),
+      uSize: { value: 5 },
+      uSpeed: { value: 0.01 },
+      uColor: {
+        value: new THREE.Vector3(
+          this.setup.guiValue.color.r,
+          this.setup.guiValue.color.g,
+          this.setup.guiValue.color.b
+        ),
       },
       ...commonUniforms,
     };
@@ -61,16 +62,17 @@ export class FaceModel {
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
       side: THREE.DoubleSide,
+      wireframe: this.setup.guiValue.wireframe,
     });
   }
 
   setModel() {
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath('/draco/');
+    dracoLoader.setDecoderPath("/draco/");
 
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
-    
+
     loader.load(
       `${import.meta.env.BASE_URL}/assets/model/face-draco.gltf`,
       (gltf) => {
@@ -98,5 +100,11 @@ export class FaceModel {
   raf() {
     if (!this.material) return;
     (this.material as any).uniforms.uTime.value += 0.01;
+    this.material.wireframe = this.setup.guiValue.wireframe;
+    this.material.uniforms.uColor.value = new THREE.Vector3(
+      this.setup.guiValue.color.r,
+      this.setup.guiValue.color.g,
+      this.setup.guiValue.color.b
+    );
   }
 }
