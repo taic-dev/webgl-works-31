@@ -3,6 +3,7 @@ uniform vec2 uMouse;
 uniform float uTime;
 uniform float uSize;
 uniform float uSpeed;
+uniform float uIntensity;
 uniform vec3 uColor;
 
 varying vec2 vUv;
@@ -33,9 +34,10 @@ vec3 palette(float t) {
 }
 
 vec4 effect(float uSize, float uSpeed) {
-  vec2 p = vec2(vUv * uSize);
+  vec2 uv = vUv;
+  vec2 p = vec2(uv * uSize);
   p = rotate2d(noise2d(p)) * vec2((noise3d(vec3(vPosition * uSpeed))));
-  float n = noise(p + uTime * 0.1);
+  float n = noise(p + uTime * 0.1) * uIntensity;
   
   return vec4(palette(n), 1.);
 }

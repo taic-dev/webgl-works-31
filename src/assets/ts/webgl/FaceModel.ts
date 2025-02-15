@@ -44,6 +44,7 @@ export class FaceModel {
       uPlaneSize: { value: new THREE.Vector2(info.dom.width, info.dom.height) },
       uSize: { value: 5 },
       uSpeed: { value: 0.01 },
+      uIntensity: { value: 0 },
       uColor: {
         value: new THREE.Vector3(
           this.setup.guiValue.color.r,
@@ -101,6 +102,7 @@ export class FaceModel {
     if (!this.material) return;
     (this.material as any).uniforms.uTime.value += 0.01;
     this.material.wireframe = this.setup.guiValue.wireframe;
+    this.material.uniforms.uIntensity.value = this.setup.guiValue.intensity;
     this.material.uniforms.uColor.value = new THREE.Vector3(
       this.setup.guiValue.color.r,
       this.setup.guiValue.color.g,

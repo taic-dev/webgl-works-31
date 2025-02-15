@@ -98,9 +98,11 @@ export class Setup {
     const gui = new GUI();
     this.guiValue = {
       color: { r: 0.8314, g: 0.898, b: 1.0 },
+      intensity: 1,
       wireframe: false,
     };
     gui.addColor(this.guiValue, "color")
+    gui.add(this.guiValue, "intensity", 1, 5 ,1);
     gui.add(this.guiValue, "wireframe");
   }
 

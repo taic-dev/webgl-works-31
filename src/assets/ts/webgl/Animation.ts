@@ -15,6 +15,7 @@ export class Animation {
   init() {
     this.onceScale();
     this.onceRotate();
+    this.upIntensity();
     this.turnOnTheLight();
 
     setTimeout(() => {
@@ -65,6 +66,20 @@ export class Animation {
         delay: 2.5,
         intensity: 5,
         duration: 1,
+        ease: EASING.TRANSFORM,
+      }
+    );
+  }
+
+  upIntensity() {
+    gsap.fromTo(
+      (this.faceModel.material as any).uniforms.uIntensity,
+      {
+        value: 0,
+      },
+      {
+        value: 1,
+        duration: 2.5,
         ease: EASING.TRANSFORM,
       }
     );
