@@ -60,6 +60,7 @@ export class FaceModel {
       uniforms: uniforms,
       fragmentShader: fragmentShader,
       vertexShader: vertexShader,
+      side: THREE.DoubleSide,
     });
   }
 
@@ -84,7 +85,6 @@ export class FaceModel {
 
         this.modelGroup.add(faceModel);
         this.modelGroup.scale.set(0, 0, 0);
-        this.modelGroup.rotation.y = -Math.PI / 8;
 
         this.setup.scene?.add(this.modelGroup);
       },
