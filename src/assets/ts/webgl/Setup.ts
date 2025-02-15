@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-// import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
+import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
 import { RectAreaLightUniformsLib } from "three/addons/lights/RectAreaLightUniformsLib.js";
 import { PARAMS } from "./constants";
 
@@ -84,16 +84,14 @@ export class Setup {
 
   setRectAreaLight() {
     RectAreaLightUniformsLib.init();
-    this.rectLight = new THREE.RectAreaLight(0xffffff, 10, 40, 40);
-    // this.rectLight.position.set(0, 40, -15);
-    this.rectLight.position.set(0, 40, 0);
-    // this.rectLight.lookAt(0, 10, 0);
+    this.rectLight = new THREE.RectAreaLight(0xffffff, 1, 30, 40);
+    this.rectLight.position.set(0, 0, -20);
     this.rectLight.lookAt(0, 0, 0);
     this.scene?.add(this.rectLight);
   }
 
   setHelper() {
-    if (!this.camera) return;
+    if (!this.camera || !this.rectLight) return;
     // OrbitControls
     this.controls = new OrbitControls(this.camera, this.renderer?.domElement);
     this.controls.enableDamping = true;
@@ -104,7 +102,7 @@ export class Setup {
     this.scene?.add(axesHelper);
 
     // RectLight
-    // this.scene?.add(new RectAreaLightHelper(this.rectLight));
+    this.scene?.add(new RectAreaLightHelper(this.rectLight));
   }
 
   resize() {
