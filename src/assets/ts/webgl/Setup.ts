@@ -61,8 +61,6 @@ export class Setup {
       PARAMS.CAMERA.NEAR,
       PARAMS.CAMERA.FAR
     );
-    // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
-    // const dist = window.innerHeight / 2 / Math.tan(fovRad);
     this.camera.position.set(0, 0, 40);
   }
 
@@ -70,8 +68,6 @@ export class Setup {
     if (!this.camera) return;
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera?.updateProjectionMatrix();
-    // const fovRad = (PARAMS.CAMERA.FOV / 2) * (Math.PI / 180);
-    // const dist = window.innerHeight / 2 / Math.tan(fovRad);
     this.camera.position.set(0, 0, 40);
   }
 
@@ -88,9 +84,11 @@ export class Setup {
 
   setRectAreaLight() {
     RectAreaLightUniformsLib.init();
-    this.rectLight = new THREE.RectAreaLight(0xffffff, 0, 100, 40);
-    this.rectLight.position.set(0, 40, -15);
-    this.rectLight.lookAt(0, 10, 0);
+    this.rectLight = new THREE.RectAreaLight(0xffffff, 10, 40, 40);
+    // this.rectLight.position.set(0, 40, -15);
+    this.rectLight.position.set(0, 40, 0);
+    // this.rectLight.lookAt(0, 10, 0);
+    this.rectLight.lookAt(0, 0, 0);
     this.scene?.add(this.rectLight);
   }
 

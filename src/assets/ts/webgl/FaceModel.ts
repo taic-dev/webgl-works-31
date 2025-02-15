@@ -7,6 +7,7 @@ import {
 } from "../utils/getElementSize";
 import fragmentShader from "../../shader/face/fragmentShader.glsl";
 import vertexShader from "../../shader/face/vertexShader.glsl";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
 export class FaceModel {
   element: HTMLImageElement | null;
@@ -63,9 +64,14 @@ export class FaceModel {
   }
 
   setModel() {
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/draco/');
+
     const loader = new GLTFLoader();
+    loader.setDRACOLoader(dracoLoader);
+    
     loader.load(
-      `${import.meta.env.BASE_URL}/assets/model/face.glb`,
+      `${import.meta.env.BASE_URL}/assets/model/face-draco.gltf`,
       (gltf) => {
         const faceModel = gltf.scene;
         const faceModelMesh = faceModel.children[0].children[0].children[0];
