@@ -1,6 +1,6 @@
 # webgl-works-31 Metal Man
 
-<img src="../webgl-works-31/public/assets/image/screenshot.png" />
+<img src="./public/assets/image/screenshot.png" />
 
 [taic-dev.github.io/webgl-works-31](taic-dev.github.io/webgl-works-31)
 
