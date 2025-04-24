@@ -2,7 +2,7 @@
 
 <img src="./public/assets/image/screenshot.png" />
 
-[taic-dev.github.io/webgl-works-31](taic-dev.github.io/webgl-works-31)
+[https://taic-dev.github.io/webgl-works-31](https://taic-dev.github.io/webgl-works-31)
 
 ## Features
 
