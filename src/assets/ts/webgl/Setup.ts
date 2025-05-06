@@ -65,14 +65,14 @@ export class Setup {
       PARAMS.CAMERA.NEAR,
       PARAMS.CAMERA.FAR
     );
-    this.camera.position.set(0, 0, 40);
+    this.camera.position.set(0, 0, 45);
   }
 
   updateCamera() {
     if (!this.camera) return;
     this.camera.aspect = window.innerWidth / window.innerHeight;
     this.camera?.updateProjectionMatrix();
-    this.camera.position.set(0, 0, 40);
+    this.camera.position.set(0, 0, 45);
   }
 
   setDirectionalLight() {
